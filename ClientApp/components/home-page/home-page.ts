@@ -31,7 +31,7 @@ class HomePageViewModel {
 			contentType: "application/json; charset=utf-8",
 			url: "/api/ReportGenerator",
 			dataType: "json",
-			data: JSON.stringify(tickets)
+			data: JSON.stringify({ "Tickets": tickets })
 		});
 
 		//$.post("api/ReportGenerator", JSON.stringify(data));

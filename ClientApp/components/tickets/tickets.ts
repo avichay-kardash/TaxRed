@@ -1,16 +1,16 @@
 ﻿import * as ko from 'knockout';
 
-class Ticket {
+export class Ticket {
 	hours: KnockoutObservable<number>;
 	isIncluded: KnockoutObservable<boolean>;
 
-	constructor(public  link: string, public title: string) {
+	constructor(public link: string, public title: string) {
 		this.hours = ko.observable(0);
 		this.isIncluded = ko.observable(true);
 	}
 }
 
-class TicketsViewModel {
+export class TicketsViewModel {
 	tickets: KnockoutObservableArray<Ticket>;
 
 	constructor() {

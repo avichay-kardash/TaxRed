@@ -4,10 +4,12 @@
 	using System.Linq;
 	using Atlassian.Jira;
 	using Models;
+	using Okta.Sdk;
 
 	public class JiraTicketsRepository : ITicketsRepository
 	{
 		private readonly string _password;
+
 		public JiraTicketsRepository(string password)
 		{
 			_password = password;

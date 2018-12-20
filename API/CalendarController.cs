@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using TaxRed.Models;
+using TaxRed.Reports;
 
 namespace TaxRed.API
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CalendarController : ControllerBase
-    {
+	[Route("api/[controller]")]
+	[ApiController]
+	public class CalendarController : ControllerBase
+	{
 		// api/calendar
 		public ActionResult Get(int year, int month)
 		{
@@ -39,6 +40,7 @@ namespace TaxRed.API
 				}
 			}
 
+	
 			return Ok(new Calendar
 			{
 				Days = days

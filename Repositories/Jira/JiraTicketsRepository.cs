@@ -23,7 +23,7 @@
 
 			return jiraClient.Issues.GetIssuesFromJqlAsync(new IssueSearchOptions(jql)).Result.Select(a => new Ticket
 			{
-				Title = a.Summary,
+				Title = a.Key.Value + " " + a.Summary,
 				Link = $"https://jira.kcura.com/browse/{a.Key}" 
 			});
 		}

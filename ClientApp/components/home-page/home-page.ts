@@ -30,12 +30,23 @@ class HomePageViewModel {
 		const days = this.calendarViewModel.days();
 
 		$.ajax({
-			type: "POST",
-			contentType: "application/json; charset=utf-8",
-			url: "/api/ReportGenerator",
-			dataType: "json",
-			data: ko.toJSON({ "Tickets": tickets, "Days": days })
-		});
+				type: "POST",
+				contentType: "application/json; charset=utf-8",
+				url: "/api/ReportGenerator",
+				dataType: "json",
+				data: ko.toJSON({ "Tickets": tickets, "Days": days })
+			})
+			.then((response) => {
+				var blobb = new Blob(response.content);
+				var link = document.createElement('a');
+				link.href = window.URL.createObjectURL(blobb);
+				link.download = "report.docx";
+				link.click();
+
+
+			}, error => {
+				alert(error);
+			});
 	}
 }
 

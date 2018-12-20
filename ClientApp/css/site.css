@@ -96,7 +96,7 @@
 			white-space: nowrap;
 		}
 
-@media (min-width: 768px) {
+@media (min-width: 992px) {
 	.calendar .legend {
 		margin-top: 60px;
 	}

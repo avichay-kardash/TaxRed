@@ -1,5 +1,11 @@
-<h2></h2>
-
-<calendar params="year: reportYear, month: reportMonth" ></calendar>
+<h1>Tax Deduction report generator</h1>
+<h2>Generating report for <span data-bind="text: reportMonth + ' ' + reportYear"></span></h2>
+<p>
+	<h4>Calendar</h4>
+	<hr />
+	<calendar params="year: reportYear, month: reportMonth"></calendar>
+</p>
 <a href="#" data-bind="click: generateReport">Generate report</a>
-<tickets></tickets>
+<p>
+	<tickets></tickets>
+</p>

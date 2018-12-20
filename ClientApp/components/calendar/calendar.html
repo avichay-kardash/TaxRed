@@ -1,46 +1,62 @@
-﻿<h4>Calendar</h4>
-<hr />
-
-<script type="text/html" id="calendar-day-template">
+﻿<script type="text/html" id="calendar-day-template">
 	<td class="day " data-bind="css: stateName, click: toggleState ">
 		<span data-bind="text: $data.dayOfMonth"></span>
 	</td>
 
 </script>
 
-<div class="calendar">
+<div class="row calendar">
 	<!-- ko if: days().length == 0 -->
 	Loading...
 	<!-- /ko -->
-	<!-- ko if: days().length -->
-	<table>
-		<thead class="header">
-			<tr>
-				<th>Mon</th>
-				<th>Tue</th>
-				<th>Wed</th>
-				<th>Thu</th>
-				<th>Fri</th>
-			</tr>
-		</thead>
-		<tbody>
-			<!-- ko foreach: weeks() -->
-			<tr>
-				<!-- ko template: { name: 'calendar-day-template', data: getDay(1) } -->
-				<!-- /ko -->
-				<!-- ko template: { name: 'calendar-day-template', data: getDay(2) } -->
-				<!-- /ko -->
-				<!-- ko template: { name: 'calendar-day-template', data: getDay(3) } -->
-				<!-- /ko -->
-				<!-- ko template: { name: 'calendar-day-template', data: getDay(4) } -->
-				<!-- /ko -->
-				<!-- ko template: { name: 'calendar-day-template', data: getDay(5) } -->
-				<!-- /ko -->
-			</tr>
 
-			<!-- /ko -->
-		</tbody>
+	<div class="col-lg-10 col-md-8">
 
-	</table>
-	<!-- /ko -->
+
+		<!-- ko if: days().length -->
+		<table>
+			<thead class="header">
+				<tr>
+					<th class="day">Mon</th>
+					<th class="day">Tue</th>
+					<th class="day">Wed</th>
+					<th class="day">Thu</th>
+					<th class="day">Fri</th>
+				</tr>
+			</thead>
+			<tbody>
+				<!-- ko foreach: weeks() -->
+				<tr>
+					<!-- ko template: { name: 'calendar-day-template', data: getDay(1) } -->
+					<!-- /ko -->
+					<!-- ko template: { name: 'calendar-day-template', data: getDay(2) } -->
+					<!-- /ko -->
+					<!-- ko template: { name: 'calendar-day-template', data: getDay(3) } -->
+					<!-- /ko -->
+					<!-- ko template: { name: 'calendar-day-template', data: getDay(4) } -->
+					<!-- /ko -->
+					<!-- ko template: { name: 'calendar-day-template', data: getDay(5) } -->
+					<!-- /ko -->
+				</tr>
+
+				<!-- /ko -->
+			</tbody>
+
+		</table>
+		<!-- /ko -->
+	</div>
+
+	<div class="col-lg-2 col-md-4 legend">
+
+		<!-- ko foreach: states -->
+		<div>
+			<span>
+				<img data-bind="css: cssClass" width="16" height="16" />
+				<span data-bind="text: name"></span>
+				<span data-bind="text: '(' + count() + ')'"></span>
+			</span>
+		</div>
+		<!-- /ko -->
+
+	</div>
 </div>

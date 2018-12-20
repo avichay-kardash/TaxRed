@@ -8,7 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Atlassian.SDK" Version="10.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.1.1" />
+    <PackageReference Include="Okta.Sdk" Version="1.1.0" />
   </ItemGroup>
 
   <ItemGroup>

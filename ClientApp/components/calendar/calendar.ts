@@ -45,7 +45,7 @@ function getStateInfo(state: CalendarDayState) {
 	return ko.utils.arrayFirst(states, s => s.state === state);
 }
 
-class CalendarDayViewModel {
+export class CalendarDayViewModel {
 	weekIndex: number = 0;
 	dayOfWeek: number = 0;
 	dayOfMonth: number = 0;
@@ -90,7 +90,7 @@ class CalendarWeekViewModel {
 
 }
 
-class CalendarViewModel {
+export class CalendarViewModel {
 	year: number = 0;
 	month: number = 0;
 	days: KnockoutObservableArray<CalendarDayViewModel>;

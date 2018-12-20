@@ -22,7 +22,6 @@ export class TicketsViewModel {
 				var tempArray: Ticket[] = [];
 
 				ko.utils.arrayForEach(data, (item: Ticket) => tempArray.push(new Ticket(item.link, item.title)));
-				
 
 				this.tickets(tempArray);
 			});

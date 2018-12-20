@@ -7,6 +7,8 @@
 	public class GenerateReportRequest
 	{
 		public IList<TicketDTO> Tickets { get; set; }
+
+		public IList<DayDTO> Days { get; set; }
 	}
 
 	[Route("api/[controller]")]

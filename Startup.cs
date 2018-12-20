@@ -1,11 +1,18 @@
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.SpaServices.Webpack;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
 namespace TaxRed
 {
+	using Microsoft.AspNetCore.Authentication.Cookies;
+	using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+	using Microsoft.AspNetCore.Builder;
+	using Microsoft.AspNetCore.Hosting;
+	using Microsoft.AspNetCore.Mvc;
+	using Microsoft.AspNetCore.SpaServices.Webpack;
+	using Microsoft.Extensions.Configuration;
+	using Microsoft.Extensions.DependencyInjection;
+	using Microsoft.IdentityModel.Protocols.OpenIdConnect;
+	using Microsoft.IdentityModel.Tokens;
+	using Okta.Sdk;
+	using Okta.Sdk.Configuration;
+
 	public class Startup
 	{
 		public Startup(IConfiguration configuration)
@@ -15,13 +22,45 @@ namespace TaxRed
 
 		public IConfiguration Configuration { get; }
 
-		// This method gets called by the runtime. Use this method to add services to the container.
 		public void ConfigureServices(IServiceCollection services)
 		{
-			services.AddMvc();
+			services.AddAuthentication(options =>
+			{
+				options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+				options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+				options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
+			})
+			.AddCookie()
+			.AddOpenIdConnect(options =>
+			{
+				options.ClientId = Configuration["ClientId"];
+				options.ClientSecret = Configuration["ClientSecret"];
+				options.Authority = Configuration["Issuer"];
+				options.CallbackPath = "/authorization-code/callback";
+				options.ResponseType = OpenIdConnectResponseType.Code;
+				options.SaveTokens = true;
+				options.UseTokenLifetime = false;
+				options.GetClaimsFromUserInfoEndpoint = true;
+				options.Scope.Add("openid");
+				options.Scope.Add("profile");
+				options.TokenValidationParameters = new TokenValidationParameters
+				{
+					NameClaimType = "name"
+				};
+			});
+
+			services.AddSingleton<IOktaClient>
+			(
+				new OktaClient(new OktaClientConfiguration
+				{
+					OktaDomain = Configuration["OktaDomain"],
+					Token = Configuration["APIToken"]
+				})
+			);
+
+			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1); ;
 		}
 
-		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)
 		{
 			if (env.IsDevelopment())
@@ -37,7 +76,9 @@ namespace TaxRed
 				app.UseExceptionHandler("/Home/Error");
 			}
 
+			app.UseDefaultFiles();
 			app.UseStaticFiles();
+			app.UseAuthentication();
 
 			app.UseMvc(routes =>
 			{

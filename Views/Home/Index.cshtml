@@ -1,14 +1,17 @@
 @{
 	ViewData["Title"] = "Home Page";
 
-	string userName = string.Empty;
 	int reportYear = ViewBag.ReportYear;
 	int reportMonth = ViewBag.ReportMonth;
 }
 
 @if (User.Identity.IsAuthenticated)
 {
-	userName = User.Identity.Name;
+	<app-root params="history: history, basename: basename, userName: '@User.Identity.Name'"></app-root>
+}
+else
+{
+	<a class="nav-link" asp-controller="Account" asp-action="Login">Log in</a>
 }
 
 <app-root params="history: history, basename: basename, userName: '@userName', reportYear: @reportYear, reportMonth: @reportMonth"></app-root>

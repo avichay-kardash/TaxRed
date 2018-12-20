@@ -1,9 +1,16 @@
 ﻿import * as ko from 'knockout';
 
-class Ticket{}
+class Ticket {
+	hours: KnockoutObservable<number>;
+	isIncluded: KnockoutObservable<boolean>;
 
-class TicketsViewModel
-{
+	constructor(public  link: string, public title: string) {
+		this.hours = ko.observable(0);
+		this.isIncluded = ko.observable(true);
+	}
+}
+
+class TicketsViewModel {
 	tickets: KnockoutObservableArray<Ticket>;
 
 	constructor() {
@@ -12,7 +19,12 @@ class TicketsViewModel
 		fetch("/api/tickets")
 			.then(response => response.json() as Promise<Ticket[]>)
 			.then(data => {
-				this.tickets(data);
+				var tempArray: Ticket[] = [];
+
+				ko.utils.arrayForEach(data, (item: Ticket) => tempArray.push(new Ticket(item.link, item.title)));
+				
+
+				this.tickets(tempArray);
 			});
 	}
 }

@@ -51,6 +51,12 @@ namespace TaxRed
 				};
 			});
 
+			var oktaClient = new OktaClient(new OktaClientConfiguration
+			{
+				OktaDomain = Configuration["OktaDomain"],
+				Token = Configuration["APIToken"]
+			});
+
 			services.AddSingleton<IOktaClient>
 			(
 				new OktaClient(new OktaClientConfiguration

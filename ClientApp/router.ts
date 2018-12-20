@@ -12,51 +12,51 @@ import * as crossroads from 'crossroads';
 // Knockout that requires or even knows about this technique. It's just one of
 // many possible ways of setting up client-side routes.
 export class Router {
-    public currentRoute = ko.observable<Route>({});
-    private disposeHistory: () => void;
-    private clickEventListener: EventListener;
+	public currentRoute = ko.observable<Route>({});
+	private disposeHistory: () => void;
+	private clickEventListener: EventListener;
 
-    constructor(private history: History.History, routes: Route[], basename: string) {
-        // Reset and configure Crossroads so it matches routes and updates this.currentRoute
-        crossroads.removeAllRoutes();
-        crossroads.resetState();
-        (crossroads as any).normalizeFn = crossroads.NORM_AS_OBJECT;
-        routes.forEach(route => {
-            crossroads.addRoute(route.url, (requestParams: any) => {
-                this.currentRoute(ko.utils.extend(requestParams, route.params));
-            });
-        });
+	constructor(private history: History.History, routes: Route[], basename: string) {
+		// Reset and configure Crossroads so it matches routes and updates this.currentRoute
+		crossroads.removeAllRoutes();
+		crossroads.resetState();
+		(crossroads as any).normalizeFn = crossroads.NORM_AS_OBJECT;
+		routes.forEach(route => {
+			crossroads.addRoute(route.url, (requestParams: any) => {
+				this.currentRoute(ko.utils.extend(requestParams, route.params));
+			});
+		});
 
-        // Make history.js watch for navigation and notify Crossroads
-        this.disposeHistory = history.listen(location => crossroads.parse(location.pathname));
-        this.clickEventListener = evt => {
-            let target: any = evt.currentTarget;
-            if (target && target.tagName === 'A') {
-                let href = target.getAttribute('href');
-                if (href && href.indexOf(basename + '/') === 0) {
-                    const hrefAfterBasename = href.substring(basename.length);
-                    history.push(hrefAfterBasename);
-                    evt.preventDefault();
-                }
-            }
-        };
-        $(document).on('click', 'a', this.clickEventListener);
+		// Make history.js watch for navigation and notify Crossroads
+		this.disposeHistory = history.listen(location => crossroads.parse(location.pathname));
+		this.clickEventListener = evt => {
+			let target: any = evt.currentTarget;
+			if (target && target.tagName === 'A') {
+				let href = target.getAttribute('href');
+				if (href && href.indexOf(basename + '/') === 0) {
+					const hrefAfterBasename = href.substring(basename.length);
+					history.push(hrefAfterBasename);
+					evt.preventDefault();
+				}
+			}
+		};
+		$(document).on('click', 'a', this.clickEventListener);
 
-        // Initialize Crossroads with starting location
-        crossroads.parse(history.location.pathname);
-    }
+		// Initialize Crossroads with starting location
+		crossroads.parse(history.location.pathname);
+	}
 
-    public link(url: string): string {
-        return this.history.createHref({ pathname: url });
-    }
+	public link(url: string): string {
+		return this.history.createHref({ pathname: url });
+	}
 
-    public dispose() {
-        this.disposeHistory();
-        $(document).off('click', 'a', this.clickEventListener);
-    }
+	public dispose() {
+		this.disposeHistory();
+		$(document).off('click', 'a', this.clickEventListener);
+	}
 }
 
 export interface Route {
-    url?: string;
-    params?: any;
+	url?: string;
+	params?: any;
 }

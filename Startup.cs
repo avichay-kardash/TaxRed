@@ -1,3 +1,5 @@
+using TaxRed.Reports;
+
 namespace TaxRed
 {
 	using Microsoft.AspNetCore.Authentication.Cookies;
@@ -68,7 +70,8 @@ namespace TaxRed
 
 			services.AddSingleton<ITicketsRepository>(new JiraTicketsRepository(Configuration["JiraPassword"]));
 
-			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1); ;
+			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+			services.AddSingleton<IReportBuilder, WordReportBuilder>();
 		}
 
 		public void Configure(IApplicationBuilder app, IHostingEnvironment env)

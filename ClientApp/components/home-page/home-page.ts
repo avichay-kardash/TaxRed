@@ -31,10 +31,8 @@ class HomePageViewModel {
 			contentType: "application/json; charset=utf-8",
 			url: "/api/ReportGenerator",
 			dataType: "json",
-			data: JSON.stringify({ "Tickets": tickets })
+			data: ko.toJSON({ "Tickets": tickets })
 		});
-
-		//$.post("api/ReportGenerator", JSON.stringify(data));
 	}
 }
 

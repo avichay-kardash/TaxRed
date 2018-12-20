@@ -3,6 +3,6 @@
         <div class='col-sm-3'>
             <nav-menu params="router: router, userName: userName"></nav-menu>
         </div>
-        <div class='col-sm-9' data-bind='component: { name: route().page, params: route }'></div>
+        <div class='col-sm-9' data-bind='component: { name: route().page, params: { reportYear: reportYear, reportMonth: reportMonth } }'></div>
     </div>
 </div>

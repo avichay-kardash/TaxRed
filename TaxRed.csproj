@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\components\calendar\calendar.ts" />
     <None Remove="ClientApp\components\tickets\tickets.ts" />
   </ItemGroup>
 
@@ -24,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\components\calendar\calendar.ts" />
     <TypeScriptCompile Include="ClientApp\components\tickets\tickets.ts" />
   </ItemGroup>
 

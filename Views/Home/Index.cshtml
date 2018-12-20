@@ -2,6 +2,8 @@
 	ViewData["Title"] = "Home Page";
 
 	string userName = string.Empty;
+	int reportYear = ViewBag.ReportYear;
+	int reportMonth = ViewBag.ReportMonth;
 }
 
 @if (User.Identity.IsAuthenticated)
@@ -9,7 +11,7 @@
 	userName = User.Identity.Name;
 }
 
-<app-root params="history: history, basename: basename, userName: '@userName'"></app-root>
+<app-root params="history: history, basename: basename, userName: '@userName', reportYear: @reportYear, reportMonth: @reportMonth"></app-root>
 
 @section scripts {
 	<script src="~/dist/main.js" asp-append-version="true"></script>

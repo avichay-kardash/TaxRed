@@ -9,15 +9,15 @@ using TaxRed.Reports;
 namespace TaxRed.API
 {
 	using System.Collections.Generic;
+	using Messaging;
 	using Microsoft.AspNetCore.Mvc;
-	using Models;
 
 	public class GenerateReportRequest
 	{
 		public int Year { get; set; }
 		public int Month { get; set; }
 
-		public IList<Ticket> Tickets { get; set; }
+		public IList<TicketDTO> Tickets { get; set; }
 	}
 
 	[Route("api/[controller]")]

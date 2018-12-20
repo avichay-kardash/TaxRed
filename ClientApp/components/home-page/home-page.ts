@@ -27,12 +27,23 @@ class HomePageViewModel {
 		}
 
 		$.ajax({
-			type: "POST",
-			contentType: "application/json; charset=utf-8",
-			url: "/api/ReportGenerator",
-			dataType: "json",
-			data: ko.toJSON({ "Tickets": tickets })
-		});
+				type: "POST",
+				contentType: "application/json; charset=utf-8",
+				url: "/api/ReportGenerator",
+				dataType: "json",
+				data: ko.toJSON({ "Tickets": tickets })
+			})
+			.then((response) => {
+				console.log(response);
+				var link = document.createElement('a');
+				link.href = window.URL.createObjectURL(response);
+				link.download = "report.docx";
+				link.click();
+
+
+			}, error => {
+				alert(error);
+			});
 	}
 }
 

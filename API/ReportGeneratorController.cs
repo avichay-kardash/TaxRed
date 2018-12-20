@@ -40,7 +40,7 @@ namespace TaxRed.API
 				Employee = User.Identity.Name,
 				Month = request.Month,
 				Year = request.Year,
-				Tickets = request.Tickets.Select(t=>t.Title).ToList(),
+				Tickets = request.Tickets.Select(t=> $"{t.Title} [{t.Hours}h]").ToList(),
 				EmployeePosition = "???"
 			}))
 			{

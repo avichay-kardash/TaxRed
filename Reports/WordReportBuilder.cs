@@ -14,12 +14,14 @@ namespace TaxRed.Reports
 		public IReport Build(ReportBuilderArgs args)
 		{
 			string currentDirectory = Directory.GetCurrentDirectory();
-			string filePath = Path.Combine(currentDirectory, "Resources", "ReportTemplate.docx");
+			string filePath = Path.Combine(currentDirectory, "Resources", "ReportTemplate1.docx");
 
 			object newTemplateName = Path.Combine(currentDirectory, "Resources", Guid.NewGuid() + ".docx");
 
 			Application app = new Application();
+
 			Document docx = app.Documents.Open(filePath);
+
 			try
 			{
 
@@ -46,7 +48,14 @@ namespace TaxRed.Reports
 					false, false, false, false);
 
 
-				findText.Execute(TICKETS_TEMPLATE, false, true, false, false, false, true, 1, false, string.Join(Environment.NewLine, args.Tickets), 2,
+				foreach (string ticket in args.Tickets)
+				{
+					findText.Execute(TICKETS_TEMPLATE, false, true, false, false, false, true, 1, false,
+						ticket + Environment.NewLine + TICKETS_TEMPLATE, 2,
+						false, false, false, false);
+				}
+
+				findText.Execute(TICKETS_TEMPLATE, false, true, false, false, false, true, 1, false, string.Empty, 2,
 					false, false, false, false);
 
 

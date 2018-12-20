@@ -7,14 +7,12 @@
 
 @if (User.Identity.IsAuthenticated)
 {
-	<app-root params="history: history, basename: basename, userName: '@User.Identity.Name'"></app-root>
+	<app-root params="history: history, basename: basename, userName: '@User.Identity.Name', reportYear: @reportYear, reportMonth: @reportMonth"></app-root>
 }
 else
 {
 	<a class="nav-link" asp-controller="Account" asp-action="Login">Log in</a>
 }
-
-<app-root params="history: history, basename: basename, userName: '@userName', reportYear: @reportYear, reportMonth: @reportMonth"></app-root>
 
 @section scripts {
 	<script src="~/dist/main.js" asp-append-version="true"></script>

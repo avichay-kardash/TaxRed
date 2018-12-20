@@ -32,6 +32,8 @@ class HomePageViewModel {
 			url: "/api/ReportGenerator",
 			dataType: "json",
 			data: JSON.stringify({ "Tickets": tickets })
+		}).then(result => {
+			console.log(result);
 		});
 
 		//$.post("api/ReportGenerator", JSON.stringify(data));

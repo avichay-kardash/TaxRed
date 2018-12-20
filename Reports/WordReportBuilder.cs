@@ -9,6 +9,7 @@ namespace TaxRed.Reports
 		private static string EMPLOYEE_TEMPLATE = "<ImieINazwisko>";
 		private static string EMPLOYEE_POSITION_TEMPLATE = "<Stanowisko>";
 		private static string REPORT_DATE_TEMPLATE = "<Miesiac/ROK>";
+		private static string TICKETS_TEMPLATE = "<tickets>";
 
 		public IReport Build(ReportBuilderArgs args)
 		{
@@ -45,6 +46,11 @@ namespace TaxRed.Reports
 					false, false, false, false);
 
 
+				findText.Execute(TICKETS_TEMPLATE, false, true, false, false, false, true, 1, false, string.Join(Environment.NewLine, args.Tickets), 2,
+					false, false, false, false);
+
+
+
 				docx.Application.ActiveDocument.SaveAs(ref newTemplateName);
 
 				return new Report
@@ -60,3 +66,4 @@ namespace TaxRed.Reports
 		}
 	}
 }
+

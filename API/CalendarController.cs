@@ -10,13 +10,6 @@ namespace TaxRed.API
 	[ApiController]
 	public class CalendarController : ControllerBase
 	{
-		private readonly IReportBuilder _reportBuilder;
-
-		public CalendarController(IReportBuilder reportBuilder)
-		{
-			_reportBuilder = reportBuilder;
-		}
-
 		// api/calendar
 		public ActionResult Get(int year, int month)
 		{
@@ -47,18 +40,7 @@ namespace TaxRed.API
 				}
 			}
 
-			using (var report = _reportBuilder.Build(new ReportBuilderArgs
-			{
-				Employee = "Piotr Marczak",
-				Month = 11,
-				Year = 2018,
-				EmployeePosition = "SSE"
-			}))
-			{
-				
-			}
-
-
+	
 			return Ok(new Calendar
 			{
 				Days = days

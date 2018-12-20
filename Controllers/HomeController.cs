@@ -9,6 +9,8 @@ namespace TaxRed.Controllers
 		[Authorize]
 		public IActionResult Index()
 		{
+
+
 			return View();
 		}
 

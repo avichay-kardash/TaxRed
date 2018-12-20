@@ -11,11 +11,13 @@ const routes: Route[] = [
 class AppRootViewModel {
 	public route: KnockoutObservable<Route>;
 	public router: Router;
+	public userName: string;
 
-	constructor(params: { history: History.History, basename: string }) {
+	constructor(params: { history: History.History, basename: string, userName: string }) {
 		// Activate the client-side router
 		this.router = new Router(params.history, routes, params.basename);
 		this.route = this.router.currentRoute;
+		this.userName = params.userName;
 
 		// Load and register all the KO components needed to handle the routes
 		// The optional 'bundle-loader?lazy!' prefix is a Webpack feature that causes the referenced modules

@@ -57,14 +57,7 @@ namespace TaxRed
 				Token = Configuration["APIToken"]
 			});
 
-			services.AddSingleton<IOktaClient>
-			(
-				new OktaClient(new OktaClientConfiguration
-				{
-					OktaDomain = Configuration["OktaDomain"],
-					Token = Configuration["APIToken"]
-				})
-			);
+			services.AddSingleton<IOktaClient>(oktaClient);
 
 			services.AddSingleton<ITicketsRepository>(new JiraTicketsRepository(Configuration["JiraPassword"]));
 

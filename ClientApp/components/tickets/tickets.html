@@ -1,0 +1,29 @@
+﻿<h4>JIRA tickets</h4>
+<hr />
+
+<!-- ko if: tickets().length == 0 -->
+Loading...
+<!-- /ko -->
+<!-- ko if: tickets().length -->
+<table class="table">
+	<thead>
+	<tr>
+		<th>
+			Title
+		</th>
+		<th>
+			Description
+		</th>
+		<th></th>
+	</tr>
+	</thead>
+	<tbody data-bind="foreach: tickets">
+
+	<tr>
+		<td data-bind="text: title"></td>
+		<td data-bind="text: description"></td>
+	</tr>
+
+	</tbody>
+</table>
+<!-- /ko -->

@@ -23,6 +23,7 @@ class AppRootViewModel {
 		// For docs, see https://github.com/webpack/bundle-loader
 		ko.components.register('nav-menu', navMenu);
 		ko.components.register('home-page', require('bundle-loader?lazy!../home-page/home-page'));
+		ko.components.register('tickets', require('bundle-loader?lazy!../tickets/tickets'));
 	}
 
 	// To support hot module replacement, this method unregisters the router and KO components.

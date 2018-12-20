@@ -12,6 +12,8 @@ namespace TaxRed
 	using Microsoft.IdentityModel.Tokens;
 	using Okta.Sdk;
 	using Okta.Sdk.Configuration;
+	using Repositories;
+	using Repositories.Jira;
 
 	public class Startup
 	{
@@ -57,6 +59,8 @@ namespace TaxRed
 					Token = Configuration["APIToken"]
 				})
 			);
+
+			services.AddSingleton<ITicketsRepository>(new JiraTicketsRepository(Configuration["JiraPassword"]));
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1); ;
 		}

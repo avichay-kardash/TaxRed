@@ -51,7 +51,7 @@ namespace TaxRed.API
 				var dataStream = new MemoryStream(dataBytes);
 
 				HttpResponseMessage httpResponseMessage = new HttpResponseMessage(HttpStatusCode.OK);
-				httpResponseMessage.Content = new StreamContent(dataStream);
+				httpResponseMessage.Content = new ByteArrayContent(dataStream.ToArray());
 				httpResponseMessage.Content.Headers.ContentDisposition = new ContentDispositionHeaderValue("attachment");
 				httpResponseMessage.Content.Headers.ContentDisposition.FileName = report.TargetFilename;
 				httpResponseMessage.Content.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");

@@ -12,9 +12,6 @@ Loading...
 				Title
 			</th>
 			<th>
-				Link
-			</th>
-			<th>
 				Hours
 			</th>
 			<th>
@@ -25,9 +22,8 @@ Loading...
 	<tbody data-bind="foreach: tickets">
 
 		<tr>
-			<td data-bind="text: title"></td>
 			<td>
-				<a target="_blank" href="#" data-bind="text: link, attr: { href: link }"></a>
+				<a target="_blank" href="#" data-bind="text: title, attr: { href: link }"></a>
 			</td>
 			<td>
 				<input type="text" data-bind="value: hours" />

@@ -34,9 +34,9 @@ class HomePageViewModel {
 				data: ko.toJSON({ "Tickets": tickets })
 			})
 			.then((response) => {
-				console.log(response);
+				var blobb = new Blob(response.content);
 				var link = document.createElement('a');
-				link.href = window.URL.createObjectURL(response);
+				link.href = window.URL.createObjectURL(blobb);
 				link.download = "report.docx";
 				link.click();
 

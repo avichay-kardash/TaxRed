@@ -5,6 +5,6 @@
 
 	public interface ITicketsRepository
 	{
-		IEnumerable<Ticket> GetTickets();
+		IEnumerable<Ticket> GetTicketsFor(string userName);
 	}
 }

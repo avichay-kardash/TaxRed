@@ -12,16 +12,29 @@ Loading...
 			Title
 		</th>
 		<th>
-			Description
+			Link
 		</th>
-		<th></th>
+		<th>
+			Hours
+		</th>
+		<th>
+			Included in report
+		</th>
 	</tr>
 	</thead>
 	<tbody data-bind="foreach: tickets">
 
 	<tr>
 		<td data-bind="text: title"></td>
-		<td data-bind="text: description"></td>
+		<td>
+			<a target="_blank" href="#" data-bind="text: link, attr: { href: link }"></a>
+		</td>
+		<td>
+			<input type="text" data-bind="value: hours"/>
+		</td>
+		<td>
+			<input type="checkbox" data-bind="checked: isIncluded"/>
+		</td>
 	</tr>
 
 	</tbody>

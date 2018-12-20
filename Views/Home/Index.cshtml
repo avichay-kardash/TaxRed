@@ -1,15 +1,15 @@
 @{
 	ViewData["Title"] = "Home Page";
-
-	string userName = string.Empty;
 }
 
 @if (User.Identity.IsAuthenticated)
 {
-	userName = User.Identity.Name;
+	<app-root params="history: history, basename: basename, userName: '@User.Identity.Name'"></app-root>
 }
-
-<app-root params="history: history, basename: basename, userName: '@userName'"></app-root>
+else
+{
+	<a class="nav-link" asp-controller="Account" asp-action="Login">Log in</a>
+}
 
 @section scripts {
 	<script src="~/dist/main.js" asp-append-version="true"></script>

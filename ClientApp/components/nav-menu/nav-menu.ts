@@ -1,4 +1,5 @@
 import * as ko from 'knockout';
+import * as $ from 'jquery';
 import { Route, Router } from '../../router';
 
 interface NavMenuParams {
@@ -18,6 +19,10 @@ class NavMenuViewModel {
 		this.router = params.router;
 		this.route = this.router.currentRoute;
 		this.userName = params.userName;
+	}
+
+	private login(): void {
+		fetch("/api/account");
 	}
 }
 

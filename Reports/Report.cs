@@ -11,10 +11,10 @@ namespace TaxRed.Reports
 
 		public void Dispose()
 		{
-			if (File.Exists(Path))
-			{
-				File.Delete(Path);
-			}
+			//if (File.Exists(Path))
+			//{
+			//	File.Delete(Path);
+			//}
 		}
 	}
 }

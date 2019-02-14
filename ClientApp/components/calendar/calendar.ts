@@ -1,6 +1,6 @@
 ﻿import * as ko from 'knockout';
 
-interface CalendarParams {
+interface ICalendarParams {
 	year: number;
 	month: number;
 }
@@ -17,20 +17,18 @@ enum CalendarDayState {
 }
 
 class CalendarDay {
-	weekIndex: number = 0;
-	dayOfWeek: number = 0;
-	dayOfMonth: number = 0;
-	state: CalendarDayState = CalendarDayState.Work;
+	weekIndex = 0;
+	dayOfWeek = 0;
+	dayOfMonth = 0;
+	state = CalendarDayState.Work;
 }
 
 class CalendarDayStateInfo {
 
-	count: KnockoutObservable<number> = ko.observable<number>(0);
+	count = ko.observable<number>(0);
 
 	constructor(public state: CalendarDayState, public next: CalendarDayState, public name: string, public cssClass: string) {
-
 	}
-
 }
 
 var states: CalendarDayStateInfo[] = [];
@@ -41,20 +39,20 @@ states.push(new CalendarDayStateInfo(CalendarDayState.SickLeave, CalendarDayStat
 states.push(new CalendarDayStateInfo(CalendarDayState.Holiday, CalendarDayState.Work, 'Holiday', 'holiday'));
 
 
-function getStateInfo(state: CalendarDayState) {
-	return ko.utils.arrayFirst(states, s => s.state === state);
+function getStateInfo(state: CalendarDayState): CalendarDayStateInfo {
+	return ko.utils.arrayFirst(states, (s: CalendarDayStateInfo) => s.state === state);
 }
 
 export class CalendarDayViewModel {
-	weekIndex: number = 0;
-	dayOfWeek: number = 0;
-	dayOfMonth: number = 0;
-	state: KnockoutObservable<CalendarDayState> = ko.observable(CalendarDayState.Work);
+	weekIndex = 0;
+	dayOfWeek = 0;
+	dayOfMonth = 0;
+	state = ko.observable(CalendarDayState.Work);
 	stateName: KnockoutComputed<string>;
-	isCorrect: boolean = false;
+	cssClass: KnockoutComputed<string>;
 
 	toggleState() {
-		let state = getStateInfo(this.state());
+		const state = getStateInfo(this.state());
 
 		this.state(state.next);
 	}
@@ -63,41 +61,37 @@ export class CalendarDayViewModel {
 		this.weekIndex = calDay.weekIndex;
 		this.dayOfWeek = calDay.dayOfWeek;
 		this.dayOfMonth = calDay.dayOfMonth;
-		this.isCorrect = true;
 		this.state(calDay.state);
 
-		this.stateName = ko.pureComputed<string>(() => {
+		this.stateName = ko.computed<string>(() => {
+			return `(${getStateInfo(this.state()).name})`;
+		});
 
-			let state = getStateInfo(this.state());
-
-			return 'active ' + state.cssClass;
+		this.cssClass = ko.computed<string>(() => {
+			return `day ${getStateInfo(this.state()).cssClass}`;
 		});
 	}
-
-
 }
 
 class CalendarWeekViewModel {
 	days: CalendarDayViewModel[] = [];
 	getDay = (index: number) => {
-		return ko.utils.arrayFirst(this.days, d => d.dayOfWeek === index) ||
+		return ko.utils.arrayFirst<CalendarDayViewModel>(this.days, d => d.dayOfWeek === index) ||
 			{
-				isCorrect: false,
 				stateName: "",
 				toggleState: () => { }
 			};
 	};
-
 }
 
 export class CalendarViewModel {
-	year: number = 0;
-	month: number = 0;
+	year = 0;
+	month = 0;
 	days: KnockoutObservableArray<CalendarDayViewModel>;
 	weeks: KnockoutComputed<CalendarWeekViewModel[]>;
 	states: CalendarDayStateInfo[];
 
-	constructor(params: CalendarParams) {
+	constructor(params: ICalendarParams) {
 		this.year = params.year;
 		this.month = params.month;
 		this.days = ko.observableArray<CalendarDayViewModel>();
@@ -109,7 +103,7 @@ export class CalendarViewModel {
 			.then(data => {
 				this.days(data.days.map(d => {
 
-					let cdvm = new CalendarDayViewModel(d);
+					const cdvm = new CalendarDayViewModel(d);
 
 					cdvm.state.subscribe(() => this.onDayChanged());
 
@@ -121,19 +115,17 @@ export class CalendarViewModel {
 	}
 
 	onDayChanged() {
-
 		for (let state of this.states) {
-			let daysInState = ko.utils.arrayFilter(this.days(), d => d.state() === state.state).length;
+			const daysInState = ko.utils.arrayFilter(this.days(), d => d.state() === state.state).length;
 			state.count(daysInState);
 		}
 	}
 
 	getWeeks() {
-
-		let weeks: CalendarWeekViewModel[] = [];
+		const weeks: CalendarWeekViewModel[] = [];
 
 		for (var it = 0; it < 10; it++) {
-			let week: CalendarWeekViewModel = new CalendarWeekViewModel();
+			const week = new CalendarWeekViewModel();
 
 			week.days = this.days().filter(d => d.weekIndex === it);
 
@@ -143,12 +135,8 @@ export class CalendarViewModel {
 				break;
 			}
 		}
-
-
 		return weeks;
 	}
-
-	
 }
 
 export default { viewModel: CalendarViewModel, template: require('./calendar.html') };
